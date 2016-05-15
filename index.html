@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="initial-scale=1">
+
+	<title>HELIOS [v4]</title>
+	<link rel="icon" type="image/png" href="img/favicon.png">
+	<link rel="stylesheet" href="css/index.css">
+
+	<!-- minified jquery -->
+	<script type="text/javascript" src="js/zepto.min.js"></script>
+
+	<!-- CSV parser -->
+	<script type="text/javascript" src="js/csv.js"></script>
+
+	<!-- D3.js -->
+	<script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+	<script type="text/javascript" src="js/index.js"></script>
+
+	<style>
+		.flex_container {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: space-between;
+		}
+		.flex_container h3{
+			text-align: left;
+		}
+		.live_data{
+			font-size: 2em;
+			text-align: left;
+			padding-left: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<main class="container">
+		<h1 id="title">Helios</h1>
+
+		<hr></hr>
+
+		<nav>
+			<ul>
+				<li><a href="#current_state">Current State</a></li>
+				<li><a href="#history">History</a></li>
+				<li><a href="#raw_data">Raw Data</a></li>
+				<li><a href="#admin">Admin Tools</a></li>
+				<li><a href="#about">About</a></li>
+			</ul>
+		</nav>
+
+		<hr></hr>
+
+		<a name="current_state"><h2>Current State</h2></a>
+		<div id="batteryContainer" name="current_state">
+			<div id="batteryOutline">
+				<div id="charge">
+					<div id="percent">??%</div>
+				</div>
+			</div>
+			<div class="flex_container">
+				<div>
+					<h3>Net Power</h3>
+					<div class="live_data"><span id="live_power">-</span> W</div>
+				</div>
+				<div>
+					<h3>Temperature</h3>
+					<div class="live_data"><span id="live_temperature">-</span> &deg;F</div>
+				</div>
+				<div>
+					<h3>Humidity</h3>
+					<div class="live_data"><span id="live_moisture">-</span> %</div>
+				</div>
+				<div>
+					<h3>Terminal Voltage</h3>
+					<div class="live_data"><span id="live_voltage">-</span> V</div>
+				</div>
+			</div>
+		</div>
+
+
+		<hr></hr>
+
+		<a name="history"><h2>History</h2></a>
+		<div id="charts" class="flex_container">
+		</div>
+
+		<hr></hr>
+
+		<a name="raw_data"><h2>Raw Data <a id="toggleTable" class="hidden" href="#"></a></h2></a>
+		<div>
+			<table id="data" style="display:none">
+				<tr>
+					<th>Time</th>
+					<th>Voltage In (V))</th>
+					<th>Current In (mA)</th>
+					<th>Terminal Voltage (V)</th>
+					<th>Voltage Out (V)</th>
+					<th>Current Out (ma)</th>
+					<th>Temperature (&deg;)</th>
+					<th>Humidity (%)</th>
+				</tr>
+			</table>
+		</div>
+
+		<hr></hr>
+
+		<a name="admin"><h2>Admin Tools</h2></a>
+		<div id="admin_panel">
+			<h3>Panel Setup</h3>
+			<p>Panel should be set at <span id="angle">-</span>&deg; off vertical for best results
+			at your current season and lattitude (<span id="lat">-</span>&deg;).</p>
+			<p><a id="ip" href="#">Arduino Control Panel</a></p>
+			<p><a href="changelog.html">Changelog</a></p>
+		</div>
+
+		<hr></hr>
+
+		<a name="about"><h2>About</h2></a>
+		<div>
+			<p><b><em>Helios</em></b> was the personification of the Sun in Greek mythology.</p>
+			<p>This project aims to design a modular framework for building custom
+				solar power charge systems that can be monitored remotely.</p>
+			<p>The base of this project was a conjoined effort by
+				Ed Cheswick (EE), Katie Garrison (ME), Colin Leath (EE), Nathan Sprenkle (CoE)
+				supervised by Dr. Ziang Zhang.</p>
+		</div>
+
+	</main>
+
+	<footer>
+		WCP37 - Modular Power - 2015-2016
+	</footer>
+
+</body>
+
+</html>
