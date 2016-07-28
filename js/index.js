@@ -49,17 +49,16 @@ $(document).ready(function(){
 		data.powerOut = data_formatted.map(function(obj) {return (obj[FIELDS["cout"]] / 1000) * obj[FIELDS["vout"]]});
 
 		$("#live_power").html(String(data.powerIn.last() - data.powerOut.last()).substr(0,3));
-		$("#live_temperature").html(String(data.temp.last()).substr(0,3));
-		$("#live_moisture").html(String(data.humidity.last()).substr(0,3));
-		$("#live_voltage").html(String(data.vbat.last()).substr(0, 3));
+		$("#live_temperature").html(String(data.temp.last()).substr(0, String(data.temp.last()).indexOf(".") || 3));
+		$("#live_moisture").html(String(data.humidity.last()).substr(0,4));
+		$("#live_voltage").html(String(data.vbat.last()).substr(0, 4));
 
 		// draw graph with x, y functions
-		drawGraph(data.time, data.powerIn, "Power In");
-		drawGraph(data.time, data.powerOut, "Power Out")
-		drawGraph(data.time, data.vbat, "Battery Voltage");
+		drawGraph(data.time, data.powerIn, "Power In (W)", "p_in");
+		drawGraph(data.time, data.powerOut, "Power Out (W)", "p_out")
+		drawGraph(data.time, data.vbat, "Battery Voltage (V)", "voltage");
 
 		drawStateOfCharge(data.vbat.last());
-
 	});
 
 	$.get(ARDUINO_IP, function(response){
@@ -135,6 +134,14 @@ function dayMonthFromString(data, index){
 	return data[index].substr(0, 5);
 }
 
+function timeFromString(data, index) {
+	return to12Hour(Number(data[index].split("-")[1].substr(0,2)));
+}
+
+function to12Hour(num){
+	return num < 13 ? num + " AM" : num - 12 + " PM";
+}
+
 /* write data into table */
 function populateTable(data){
 	var i = 1,
@@ -182,7 +189,7 @@ function drawStateOfCharge(curr) {
 }
 
 /* d3 data */
-function drawGraph(x_data, y_data, title) {
+function drawGraph(x_data, y_data, title, id) {
 	/* prepare a formatted data set */
 	var data = [],
 		len = y_data.length;
@@ -202,7 +209,7 @@ function drawGraph(x_data, y_data, title) {
 	var vis = d3.select("#charts")
 		//.append("div")
 		.append("svg:svg")
-		.attr("id", title)
+		.attr("id", id)
 		.attr("width", w)
 		.attr("height", h);
 
@@ -241,7 +248,11 @@ function drawGraph(x_data, y_data, title) {
 		.data(x.ticks(x_ticks))
 		.enter().append("svg:text")
 		.attr("class", "xLabel")
-		.text(function(d) { return dayMonthFromString(x_data, d) })//String)
+		.text(function(d) {
+			// TODO - put duration checking code here to decide axis labels
+			// return dayMonthFromString(x_data, d)
+			return timeFromString(x_data, d)
+		})
 		.attr("x", function(d) { return x(d) })
 		.attr("y", 0)
 		.attr("text-anchor", "middle");
