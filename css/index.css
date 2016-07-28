@@ -111,12 +111,12 @@ nav ul li:last-child::after{
 	font-size: 9pt;s
 }
 #charts svg path {
-	stroke: steelblue;
-	stroke-width: 2;
+	stroke: white;
+	/*stroke-width: 2;*/
 	fill: none;
 }
-#charts #Voltage path{
-	stroke: red;
+#charts #voltage path{
+	/*stroke: red;*/
 }
 
 
